@@ -2,6 +2,9 @@ from Your import *
 from Facebook import *
 import unicodecsv as csv
 
+# Don't worry about the Your package, I literally just used a
+#  class so that I didn't accidentally commit my personal info!
+#  Delete the `from Your import *` line when you download this!
 email = Your.username_here()  # DO NOT COMMIT WITH THIS INFO
 password = Your.password_here()    # DO NOT COMMIT WITH THIS INFO
 number_of_pages = 3000
