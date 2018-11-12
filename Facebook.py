@@ -67,26 +67,28 @@ class Facebook:
         # Print column headers
         df = [["text", "num_likes", "num_loves", "num_hahas", "num_wows", "num_sads", "num_angrys", "num_reacts", "event_link", "hashtags_used", "who_reacted"]]
         links_to_stories = []
+
         # Scrape link of "Full Story" for each post.
-        for page in range(0, number_of_pages):
-            stories = self.driver.find_elements_by_xpath("//*[contains(text(), 'Full Story')]")
-            for story in stories:
-                links_to_stories.append(story.get_attribute('href'))
-            time.sleep(random.uniform(0, self.max_wait))
-            try:
-                x = self.driver.find_element_by_xpath("/html/body/div/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/a")
-                x.click()
-            except:
-                x = self.driver.find_element_by_xpath("//*[contains(text(), 'Full Story')]")
-                x.click()
-                try:
-                    self.driver.back()
-                    x = self.driver.find_element_by_xpath("//*[contains(text(), '" + list_of_years[year_pointer] + "')]")
-                    x.click()
-                    list_of_years += 1
-                except:
-                    # exit()
-                    pass
+        with open("friendless_log.txt", "a") as log:
+            for page in range(0, number_of_pages):
+                    stories = self.driver.find_elements_by_xpath("//*[contains(text(), 'Full Story')]")
+                    log.write(self.driver.current_url, "\n")
+                    for story in stories:
+                        links_to_stories.append(story.get_attribute('href'))
+                        log.write("     " + str(story.get_attribute('href')), "\n")
+                    time.sleep(random.uniform(0, self.max_wait))
+                    try:
+                        x = self.driver.find_element_by_xpath("/html/body/div/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/a")
+                        x.click()
+                    except:
+                        x = self.driver.find_element_by_xpath("//*[contains(text(), '" + list_of_years[year_pointer] + "')]")
+                        x.click()
+                        year_pointer += 1
+                        if year_pointer >= len(list_of_years):
+                            break
+
+            log.close()
+
         # Traverses each story link and scrapes data
         for link in links_to_stories:
 
