@@ -72,10 +72,10 @@ class Facebook:
         with open("friendless_log.txt", "a") as log:
             for page in range(0, number_of_pages):
                     stories = self.driver.find_elements_by_xpath("//*[contains(text(), 'Full Story')]")
-                    log.write(self.driver.current_url, "\n")
+                    log.write(self.driver.current_url + "\n")
                     for story in stories:
                         links_to_stories.append(story.get_attribute('href'))
-                        log.write("     " + str(story.get_attribute('href')), "\n")
+                        log.write("     " + str(story.get_attribute('href')) + "\n")
                     time.sleep(random.uniform(0, self.max_wait))
                     try:
                         x = self.driver.find_element_by_xpath("/html/body/div/div/div[2]/div/div[1]/div[2]/div[2]/div[2]/a")
@@ -88,6 +88,10 @@ class Facebook:
                             break
 
             log.close()
+
+            with open("friendless_log.txt", "a") as log:
+                log.write("\n\n<Console>\n\n")
+                log.close()
 
         # Traverses each story link and scrapes data
         for link in links_to_stories:
@@ -168,23 +172,26 @@ class Facebook:
                     self.driver.find_element_by_xpath("//*[contains(text(), 'See More')]").click()
                 except:
                     break
-
-            print(" post text: |" + text + "\"\n" +
-                  ".num_likes: | " + str(num_likes) + "\n" +
-                  ".num_loves: | " + str(num_loves) + "\n" +
-                  ".num_hahas: | " + str(num_hahas) + "\n" +
-                  "..num_wows: | " + str(num_wows) + "\n" +
-                  "..num_sads: | " + str(num_sads) + "\n" +
-                  "num_angrys: | " + str(num_angrys) + "\n" +
-                  "num_reacts: | " + str(num_reacts) + "\n" +
-                  "event_link: | " + str(event_link) + "\n" +
-                  "hashtags_used: " + str(hashtags_used) + "\n" +
-                  "who_reacted:" + str(who_reacted) + "\n\n")
+            x = (".post text: | " + text + "\"\n" +
+                 ".num_likes: | " + str(num_likes) + "\n" +
+                 ".num_loves: | " + str(num_loves) + "\n" +
+                 ".num_hahas: | " + str(num_hahas) + "\n" +
+                 "..num_wows: | " + str(num_wows) + "\n" +
+                 "..num_sads: | " + str(num_sads) + "\n" +
+                 "num_angrys: | " + str(num_angrys) + "\n" +
+                 "num_reacts: | " + str(num_reacts) + "\n" +
+                 "event_link: | " + str(event_link) + "\n" +
+                 "hashtags_used: " + str(hashtags_used) + "\n" +
+                 "who_reacted:" + str(who_reacted) + "\n\n")
+            print(x)
+            with open("friendless_log.txt", "a") as log:
+                log.write(x)
+                log.close()
 
             df.append([str(text), str(num_likes), str(num_loves), str(num_hahas), str(num_wows), str(num_sads), str(num_angrys), str(num_reacts), str(event_link), str(hashtags_used), str(who_reacted)])
             with open(file_out, 'ab') as csv_file:
                 writer = csv.writer(csv_file, lineterminator='\n')
-                writer.writerows(df)
+                writer.writerow([str(text), str(num_likes), str(num_loves), str(num_hahas), str(num_wows), str(num_sads), str(num_angrys), str(num_reacts), str(event_link), str(hashtags_used), str(who_reacted)])
             csv_file.close()
         return df
 
