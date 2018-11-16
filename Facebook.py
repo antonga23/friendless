@@ -49,7 +49,6 @@ class Facebook:
 
         # Test the hush params.
         try:
-            can_hush = True
             if 4 >= len(hush_params) >= 2:
                 x = Facebook.convert_to_time(hush_params[0])
                 y = Facebook.convert_to_time(hush_params[1])

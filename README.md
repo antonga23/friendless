@@ -36,6 +36,8 @@ fb = Facebook(email, password, max_wait=10, geckopath='/usr/local/bin/geckodrive
 fb.goto_page("https://mobile.facebook.com/SOME_PAGE/super_long_link...")
 
 df = fb.scrape_mobile(number_of_pages, scrape_who_reacted=True, hush_params=["21:30", "07:30", 30, 30])
+# hush_params puts the bot to sleep for about 8 hours a night to prevent looking sketchy..
+# [time to sleep, time to wake,
 # Returns a nested list (ready to be iterated through and written to csv) of the format:
 # [text, num_likes, num_loves, num_hahas, num_wows, num_sads, num_angrys, num_reacts, event_link, hashtags_used(list), reacted(hashed list)]
 ```
