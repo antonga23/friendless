@@ -41,6 +41,10 @@ df = fb.scrape_mobile(number_of_pages, scrape_who_reacted=True, hush_params=["21
 # Returns a nested list (ready to be iterated through and written to csv) of the format:
 # [text, num_likes, num_loves, num_hahas, num_wows, num_sads, num_angrys, num_reacts, event_link, hashtags_used(list), reacted(hashed list)]
 ```
+### Additional Features
+`parse_log(read_loc, write_loc)` - call from main to parse a log file. This is useful in case
+the csv was corrupted or came across an odd character during the scraping process.
+
 
 ### Disclaimer
 
